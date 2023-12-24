@@ -36,8 +36,7 @@ def count():
 def get_pictures():
     if not data:
         return {"message": "internal server error"}, 500
-    pic_urls = [pic['pic_url'] for pic in data if 'pic_url' in pic]
-    return pic_urls, 200
+    return data
 
 
 ######################################################################
@@ -69,6 +68,7 @@ def create_picture():
     data.append(new_picture)
     return new_picture, 201
 
+
 ######################################################################
 # UPDATE A PICTURE
 ######################################################################
@@ -81,7 +81,7 @@ def update_picture(id):
     for picture in data:
         if picture["id"] == new_picture_data["id"]:
             picture.update(new_picture_data)
-            return picture, 200
+            return picture, 201
     return {"message": "picture not found"}, 404
 
 
@@ -96,5 +96,5 @@ def delete_picture(id):
     for picture in data:
         if picture["id"] == id:
             data.remove(picture)
-            return {"message": f"picture with id {id} was deleted"}, 204
+            return "", 204
     return {"message": "picture not found"}, 404
